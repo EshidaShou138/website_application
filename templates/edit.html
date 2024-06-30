@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    ADD TASK
+{% endblock %}
+
+{% block main %}
+    <form action="/edit_task" method="post">
+        <div class="mb-3">
+            <input type="hidden" name="task_id" value="{{ task_id }}">
+            <textarea autocomplete="off" autofocus class="form-control" rows="4" cols="40" name="task" task_id="{{ task_id }}" id="text" type="text">{{ task }}</textarea>
+        </div>
+        <button class="btn btn-primary" type="submit">EDIT TASK</button>
+    </form>
+
+    <script>
+
+        var input = document.getElementById("text");
+        input.focus();
+        input.setSelectionRange(input.value.length, input.value.length);
+
+    </script>
+{% endblock %}

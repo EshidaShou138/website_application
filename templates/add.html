@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    ADD TASK
+{% endblock %}
+
+{% block main %}
+    <form action="/addtask" method="post">
+        <div class="mb-3">
+            <textarea autocomplete="off" autofocus class="form-control" rows="4" cols="40" name="task" placeholder="Write the task you want to do" type="text"></textarea>
+        </div>
+        <button class="btn btn-primary" type="submit">ADD TASK</button>
+
+    </form>
+{% endblock %}

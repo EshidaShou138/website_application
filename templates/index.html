@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    MY TO-DO
+{% endblock %}
+
+{% block main %}
+
+<!-- I got the chatgpt help for the css -->
+
+
+    <div class="container mt-4">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <ul class="list-group list-group-flush">
+                    {% for task in tasks %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <div class="form-check d-flex align-items-center">
+                                <input type="hidden" name="checkbox" value="0">
+                                <form action="/check_state" method="post">
+                                    <input type="hidden" name="checkbox" value="{{ task.task_id }}">
+                                    <input class="form-check-input me-2" type="checkbox" name="checkbox" value="{{ task.task_id }}" {% if task.checked == 1 %} checked {% endif %} onchange="this.form.submit();">
+                                    <label class="form-check-label font-weight-bold">{{ task.task }}</label>
+                                </form>
+                            </div>
+                            <div class="ms-auto">
+                                <form action="/edit" method="post">
+                                    <input type="hidden" name="task_id" value="{{ task.task_id }}">
+                                    <button type="submit" name="edit" class="btn btn-primary">Edit Task</button>
+                                </form>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}
