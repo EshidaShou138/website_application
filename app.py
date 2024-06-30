@@ -200,13 +200,13 @@ def edit():
         task = request.form.get("task")
         print(task)
         if not task:
-            error = "MUST CONTAIN A TASK!!3"
+            error = "MUST CONTAIN A TASK!!"
             return render_template("error.html", error=error)
         db.execute(
             "UPDATE tasks SET task = ? WHERE task_id = ?", task, task_id
         )
         return redirect("/")
-    
+
     else:
         task_id = request.args.get('task_id')
         task = db.execute(
@@ -238,3 +238,30 @@ def hand():
         return render_template("error.html", error=error)
     print("task_id is " + task_id)
     return redirect("/edit_task?task_id=" + task_id )
+
+
+@app.route("/delete", methods=["POST"])
+@login_required
+def delete():
+    task_id = request.form.get("task_id")
+    print(task_id)
+    if not task_id:
+        error = "NO WAY YOU HACKER!!1"
+        return render_template("error.html", error=error)
+    tasks = db.execute(
+        "SELECT task_id FROM tasks WHERE id = ?", session["user_id"]
+    )
+    print(tasks)
+    task_list = []
+    for task in tasks:
+        task_list.append(task['task_id'])
+    print(task_list)
+    if int(task_id) not in task_list:
+        error = "NO WAY YOU HACKER!!2"
+        return render_template("error.html", error=error)
+    print("task_id is " + task_id)
+    print(task)
+    db.execute(
+        "DELETE FROM tasks WHERE task_id = ?", task_id
+        )
+    return redirect("/")
